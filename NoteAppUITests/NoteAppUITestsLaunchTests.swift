@@ -1,10 +1,3 @@
-//
-//  NoteAppUITestsLaunchTests.swift
-//  NoteAppUITests
-//
-//  Created by i0240 on 20.11.2024.
-//
-
 import XCTest
 
 final class NoteAppUITestsLaunchTests: XCTestCase {
