@@ -27,8 +27,8 @@ final class MainPresenterTests: XCTestCase {
     }
 
     func testFiltersNotes() {
-        let note1 = NoteEntity.ToDos(id: 1, todo: "First Todo", completed: false, description: "First", timestemp: "01/01/24")
-        let note2 = NoteEntity.ToDos(id: 2, todo: "Second Todo", completed: false, description: "Second", timestemp: "01/01/24")
+        let note1 = ToDos(id: 1, todo: "First Todo", completed: false, description: "First", timestemp: "01/01/24")
+        let note2 = ToDos(id: 2, todo: "Second Todo", completed: false, description: "Second", timestemp: "01/01/24")
         presenter.notes = [note1, note2]
 
         presenter.text = "First"

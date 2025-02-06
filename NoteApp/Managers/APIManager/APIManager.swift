@@ -3,27 +3,30 @@ import Foundation
 final class APIManager: APIManagerProtocol {
 
     static let shared = APIManager()
-    private var baseURL: String
+    private let baseURL = URL(string: "https://dummyjson.com/todos")
 
-    init(baseURL: String = "https://dummyjson.com/todos") {
-        self.baseURL = baseURL
-    }
+    private init() {}
 
-    func fetchTodo(completion: @escaping (Result<[NoteEntity.ToDos], Error>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard let components = URLComponents(string: self.baseURL),
-                  let url = components.url else {
+    func fetchTodo(completion: @escaping (Result<[ToDos], Error>) -> Void) {
+        let task = URLSession.shared.dataTask(with: baseURL ?? URL(fileURLWithPath: "")) { data, response, error in
+            if let error = error {
                 DispatchQueue.main.async {
-                    completion(.failure(URLError(.badURL)))
+                    completion(.failure(error))
+                }
+                return
+            }
+
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(.failure(URLError(.badServerResponse)))
                 }
                 return
             }
 
             do {
-                let data = try Data(contentsOf: url)
                 let response = try JSONDecoder().decode(NoteEntity.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(response.todos ?? []))
+                    completion(.success(response.todos))
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -31,5 +34,6 @@ final class APIManager: APIManagerProtocol {
                 }
             }
         }
+        task.resume()
     }
 }

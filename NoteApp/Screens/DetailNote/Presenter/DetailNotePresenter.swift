@@ -8,7 +8,7 @@ class DetailNotePresenter: ObservableObject {
     private let interactor: DetailNoteProtocol
     private let router: DetailNoteRouterProtocol
     private var cancellable: AnyCancellable?
-    @Published var selectedNote: NoteEntity.ToDos {
+    @Published var selectedNote: ToDos {
         didSet {
             checkUpdate()
         }

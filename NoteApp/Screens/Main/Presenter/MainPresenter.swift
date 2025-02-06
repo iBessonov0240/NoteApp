@@ -13,9 +13,9 @@ class MainPresenter: ObservableObject {
             filterNotes()
         }
     }
-    @Published var notes: [NoteEntity.ToDos] = []
-    @Published var filteredNotes: [NoteEntity.ToDos] = []
-    @Published var selectedNote: NoteEntity.ToDos?
+    @Published var notes: [ToDos] = []
+    @Published var filteredNotes: [ToDos] = []
+    @Published var selectedNote: ToDos?
     @Published var isDetailPresented = false
     @Published var isShareSheetPresented = false
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
@@ -42,7 +42,7 @@ class MainPresenter: ObservableObject {
         if text.isEmpty {
             filteredNotes = notes
         } else {
-            filteredNotes = notes.filter { $0.todo?.lowercased().contains(text.lowercased()) ?? false }
+            filteredNotes = notes.filter { $0.todo?.localizedCaseInsensitiveContains(text) ?? false }
         }
     }
 
@@ -50,7 +50,7 @@ class MainPresenter: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
         
-        let newNote = NoteEntity.ToDos(
+        let newNote = ToDos(
             id: Int(Date().timeIntervalSince1970),
             todo: "No title",
             completed: false,
@@ -64,13 +64,13 @@ class MainPresenter: ObservableObject {
         }
     }
 
-    func deleteNote(_ note: NoteEntity.ToDos) {
+    func deleteNote(_ note: ToDos) {
         interactor.deleteNote(note) { [weak self] in
             self?.loadNotes()
         }
     }
 
-    func didSelectNote(_ note: NoteEntity.ToDos) {
+    func didSelectNote(_ note: ToDos) {
         selectedNote = note
         isDetailPresented = true
     }
@@ -88,7 +88,7 @@ class MainPresenter: ObservableObject {
             dateFormatter.dateFormat = "dd/MM/yy"
 
             for todo in todos {
-                let newNote = NoteEntity.ToDos(
+                let newNote = ToDos(
                     id: todo.id,
                     todo: todo.todo ?? "No title",
                     completed: todo.completed,

@@ -33,7 +33,7 @@ class DetailNoteInteractorTests: XCTestCase {
     }
 
     var interactor: DetailNoteInteractor!
-    var mockNote: NoteEntity.ToDos!
+    var mockNote: ToDos!
     var mockPersistenceController: MockPersistenceController!
 
     override func setUp() {
@@ -42,7 +42,7 @@ class DetailNoteInteractorTests: XCTestCase {
 
         let context = mockPersistenceController.container.viewContext
 
-        mockNote = NoteEntity.ToDos(
+        mockNote = ToDos(
             id: 1,
             todo: "Test Note",
             completed: false,

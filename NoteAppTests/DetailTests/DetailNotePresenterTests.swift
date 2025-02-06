@@ -5,13 +5,13 @@ import Combine
 class DetailNotePresenterTests: XCTestCase {
 
     class MockDetailNoteInteractor: DetailNoteProtocol {
-        var note: NoteEntity.ToDos
+        var note: ToDos
 
-        init(note: NoteEntity.ToDos) {
+        init(note: ToDos) {
             self.note = note
         }
 
-        func getNote() -> NoteEntity.ToDos {
+        func getNote() -> ToDos {
             return note
         }
 
@@ -23,11 +23,11 @@ class DetailNotePresenterTests: XCTestCase {
 
     var presenter: DetailNotePresenter!
     var interactor: MockDetailNoteInteractor!
-    var mockNote: NoteEntity.ToDos!
+    var mockNote: ToDos!
 
     override func setUp() {
         super.setUp()
-        mockNote = NoteEntity.ToDos(id: 1, todo: "Test Note", completed: false, description: "Test description", timestemp: "01/01/2024")
+        mockNote = ToDos(id: 1, todo: "Test Note", completed: false, description: "Test description", timestemp: "01/01/2024")
 
         interactor = MockDetailNoteInteractor(note: mockNote)
         presenter = DetailNotePresenter(interactor: interactor, router: DetailNoteRouter())

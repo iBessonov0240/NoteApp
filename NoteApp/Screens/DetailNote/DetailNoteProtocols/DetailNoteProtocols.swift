@@ -1,6 +1,6 @@
 import Foundation
 
 protocol DetailNoteProtocol {
-    func getNote() -> NoteEntity.ToDos
+    func getNote() -> ToDos
     func updateNote(title: String?, description: String?)
 }

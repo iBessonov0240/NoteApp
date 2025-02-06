@@ -5,20 +5,20 @@ class DetailNoteInteractor: DetailNoteProtocol {
 
     // MARK: - Property
 
-    private var selectedNote: NoteEntity.ToDos
+    private var selectedNote: ToDos
     private let persistenceController: PersistenceControllerProtocol
     private let queue = DispatchQueue(label: "todos", qos: .userInteractive)
 
     // MARK: - Init
 
-    init(selectedNote: NoteEntity.ToDos, persistenceController: PersistenceControllerProtocol) {
+    init(selectedNote: ToDos, persistenceController: PersistenceControllerProtocol) {
         self.selectedNote = selectedNote
         self.persistenceController = persistenceController
     }
 
     // MARK: - Functions
 
-    func getNote() -> NoteEntity.ToDos {
+    func getNote() -> ToDos {
         selectedNote
     }
 

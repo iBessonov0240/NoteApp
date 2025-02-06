@@ -2,12 +2,13 @@ import SwiftUI
 
 @main
 struct NoteAppApp: App {
-    let mainView = MainRouter()
+
+    let persistenceController = PersistenceController()
 
     var body: some Scene {
         WindowGroup {
+            let mainView = MainModule(persistenceController: persistenceController)
             mainView.createModul()
-                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                 .accentColor(ColorManager().yellow)
         }
     }

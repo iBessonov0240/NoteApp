@@ -3,17 +3,20 @@ import CoreData
 
 class MainRouter: MainRouterProtocol {
 
-    private var persistenceController: PersistenceControllerProtocol = PersistenceController.shared
+    // MARK: - Properties
 
-    func createModul() -> AnyView {
-        let interactor = MainInteractor(persistenceController: persistenceController)
-        let router = MainRouter()
-        let presenter = MainPresenter(interactor: interactor, router: router)
-        return AnyView(Main(presenter: presenter))
+    private let persistenceController: PersistenceControllerProtocol
+
+    // MARK: - Init
+
+    init(persistenceController: PersistenceControllerProtocol) {
+        self.persistenceController = persistenceController
     }
 
-    func navigateToDetail(with note: NoteEntity.ToDos) -> AnyView {
-        let detailNote = DetailNoteRouter()
+    // MARK: - Functions
+
+    func navigateToDetail(with note: ToDos) -> AnyView {
+        let detailNote = DetailModule(persistenceController: persistenceController)
         return detailNote.createModul(with: note)
     }
 }

@@ -17,7 +17,7 @@ class MainInteractor: MainProtocol {
     // MARK: - Functions
 
     /// Core Data
-    func fetchNotes(completion: @escaping ([NoteEntity.ToDos]) -> Void) {
+    func fetchNotes(completion: @escaping ([ToDos]) -> Void) {
         queue.async {
             let fetchRequest = NSFetchRequest<Note>(entityName: "Note")
             fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Note.id, ascending: false)]
@@ -25,7 +25,7 @@ class MainInteractor: MainProtocol {
             let fetchedEntities: [Note] = self.persistenceController.fetchData(for: fetchRequest)
 
             let todos = fetchedEntities.map {
-                NoteEntity.ToDos(
+                ToDos(
                     id: Int($0.id),
                     todo: $0.todoTitle,
                     completed: $0.completed,
@@ -39,7 +39,7 @@ class MainInteractor: MainProtocol {
         }
     }
 
-    func addNote(newNote: NoteEntity.ToDos, complition: @escaping () -> Void) {
+    func addNote(newNote: ToDos, complition: @escaping () -> Void) {
         queue.async {
             let context = self.persistenceController.container.viewContext
             let newTodo = Note(context: context)
@@ -57,7 +57,7 @@ class MainInteractor: MainProtocol {
         }
     }
 
-    func deleteNote(_ note: NoteEntity.ToDos, complition: @escaping () -> Void) {
+    func deleteNote(_ note: ToDos, complition: @escaping () -> Void) {
         queue.async {
             let fetchRequest = NSFetchRequest<Note>(entityName: "Note")
             let context = self.persistenceController.container.viewContext
@@ -86,7 +86,7 @@ class MainInteractor: MainProtocol {
     }
 
     /// API
-    func fetchNotesFromAPI(completion: @escaping ([NoteEntity.ToDos]) -> Void) {
+    func fetchNotesFromAPI(completion: @escaping ([ToDos]) -> Void) {
         queue.async {
             APIManager.shared.fetchTodo { result in
                 switch result {

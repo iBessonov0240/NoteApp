@@ -6,62 +6,45 @@ struct DetailNote: View {
 
     @ObservedObject var presenter: DetailNotePresenter
 
+    // MARK: - Constants
+    
+    private let padding: CGFloat = 20
+    private let spacing: CGFloat = 8
+    private let titleFont = Font.system(size: 34, weight: .bold)
+    private let descriptionFont = Font.system(size: 16, weight: .regular)
+    private let dateFont = Font.system(size: 12, weight: .regular)
+
     // MARK: - View
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 8) {
+            VStack(spacing: spacing) {
 
-                TextField(
-                    "",
+                CustomTextField(
                     text: Binding(
-                    get: { presenter.selectedNote.todo ?? "" },
-                    set: { presenter.selectedNote.todo = $0 }
-                ),
-                    axis: .vertical
+                        get: { presenter.selectedNote.todo ?? "" },
+                        set: { presenter.selectedNote.todo = $0 }
+                    ),
+                    font: titleFont
                 )
-                .font(.system(size: 34, weight: .bold))
-                .foregroundColor(ColorManager().white)
-                .frame(maxWidth: .infinity)
 
                 Text(presenter.selectedNote.timestemp ?? "")
                     .foregroundColor(ColorManager().whiteAlpha)
-                    .font(.system(size: 12, weight: .regular))
+                    .font(dateFont)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                TextField(
-                    "",
+                CustomTextField(
                     text: Binding(
                         get: { presenter.selectedNote.description ?? "" },
                         set: { presenter.selectedNote.description = $0 }
-                ),
-                    axis: .vertical
+                    ),
+                    font: descriptionFont
                 )
-                .font(.system(size: 16, weight: .regular))
-                .foregroundColor(ColorManager().white)
-                .frame(maxWidth: .infinity)
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-
-                        Button {
-                            UIApplication.shared.sendAction(
-                                #selector(UIResponder.resignFirstResponder),
-                                to: nil,
-                                from: nil,
-                                for: nil
-                            )
-                        } label: {
-                            Text("Done")
-                                .foregroundStyle(ColorManager().white)
-                        }
-                    }
-                }
 
                 Spacer()
             }
-            .padding(.top, 19)
-            .padding(.leading, 20)
+            .padding(.top, padding)
+            .padding(.leading, padding)
             .background(ColorManager().background)
         }
         .onDisappear {
@@ -72,5 +55,5 @@ struct DetailNote: View {
 }
 
 #Preview {
-    DetailNote(presenter: DetailNotePresenter(interactor: DetailNoteInteractor(selectedNote: NoteEntity.ToDos.init(id: 1, todo: "Title", completed: false, description: "Description", timestemp: "02/04/24"), persistenceController: PersistenceController.shared), router: DetailNoteRouter()))
+    DetailNote(presenter: DetailNotePresenter(interactor: DetailNoteInteractor(selectedNote: ToDos.init(id: 1, todo: "Title", completed: false, description: "Description", timestemp: "02/04/24"), persistenceController: PersistenceController()), router: DetailNoteRouter()))
 }

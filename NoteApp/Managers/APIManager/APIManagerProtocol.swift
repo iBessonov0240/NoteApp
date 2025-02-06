@@ -1,3 +1,3 @@
 protocol APIManagerProtocol {
-    func fetchTodo(completion: @escaping (Result<[NoteEntity.ToDos], Error>) -> Void)
+    func fetchTodo(completion: @escaping (Result<[ToDos], Error>) -> Void)
 }

@@ -12,7 +12,7 @@ final class MainInteractorTests: XCTestCase {
     }
 
     func testAddAndFetchNotes() {
-        let newNote = NoteEntity.ToDos(
+        let newNote = ToDos(
             id: 1,
             todo: "Test Todo",
             completed: false,

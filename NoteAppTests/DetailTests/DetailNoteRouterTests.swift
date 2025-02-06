@@ -7,7 +7,7 @@ class DetailNoteRouterTests: XCTestCase {
 
     var router: DetailNoteRouter!
     var persistenceController: PersistenceController!
-    var mockNote: NoteEntity.ToDos!
+    var mockNote: ToDos!
 
     override func setUp() {
         super.setUp()
@@ -15,7 +15,7 @@ class DetailNoteRouterTests: XCTestCase {
         persistenceController = PersistenceController()
         router = DetailNoteRouter()
 
-        mockNote = NoteEntity.ToDos(id: 1, todo: "Test Note", completed: false, description: "Test description", timestemp: "01/01/2024")
+        mockNote = ToDos(id: 1, todo: "Test Note", completed: false, description: "Test description", timestemp: "01/01/2024")
     }
 
     func testCreateModule() {
